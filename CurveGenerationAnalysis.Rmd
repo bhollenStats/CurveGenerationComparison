@@ -1,0 +1,38 @@
+---
+title: "CurveGenerationAnalysis"
+author: "hollen"
+date: "March 5, 2019"
+output: pdf_document
+params:
+  fileToProcess: 'DriveCycleData.csv'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(stats)
+```
+
+## Analysis of Generated 10 Hertz Driving Cycle 
+
+Processing results from test data `r params$fileToProcess`
+
+```{r ReadTheData}
+df <- read.csv(file = params$fileToProcess , header = TRUE, sep = ',')
+```
+
+```{r AnalyzeTheData, echo=TRUE}
+curveModel <- lm(df$GeneratedTrace~df$DefinedTrace, df)
+```
+
+Here's the output of the curve model
+
+```{r SummaryResults, echo=TRUE}
+summary(curveModel)
+```
+
+Here's the ANOVA results from the curve model
+
+```{r ANOVAResults}
+anova(curveModel)
+```
+
